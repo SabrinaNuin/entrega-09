@@ -1,0 +1,34 @@
+// ==========================================================================
+// Presentación (hero)
+// ==========================================================================
+
+@use "../utilities/variables" as *;
+@use "../utilities/mixins" as *;
+
+.hero {
+    // Ajustes de la librería Animate.css para que las entradas sean breves
+    --animate-duration: #{$duracion-lenta};
+    --animate-delay: #{$duracion-media};
+
+    @include flex-columna($espacio-lg);
+    align-items: center;
+    margin-bottom: $espacio-xl;
+    padding: $espacio-xl $espacio-lg;
+    background-color: $color-primario;
+    background-image: linear-gradient(135deg, $color-primario 0%, $color-secundario 100%);
+    color: $color-superficie;
+    text-align: center;
+
+    @include desde(tablet) {
+        padding: 3rem $espacio-lg;
+    }
+}
+
+.hero-title {
+    @extend %titulo-sobre-oscuro;
+}
+
+.hero-text {
+    max-width: 40rem;
+    font-size: 1.125rem;
+}

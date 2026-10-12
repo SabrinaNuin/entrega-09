@@ -1,0 +1,60 @@
+// ==========================================================================
+// Tarjetas: grilla contenedora y componente card de Bootstrap adaptado
+// ==========================================================================
+
+@use "../utilities/variables" as *;
+@use "../utilities/mixins" as *;
+
+// Contenedor de tarjetas. En celular: una columna
+.card-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $espacio-lg;
+
+    @include desde(tablet) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+// Entrada escalonada: cada tarjeta aparece un instante después de la anterior
+@for $i from 2 through 3 {
+    .card-list .card:nth-child(#{$i}) {
+        animation-delay: ($i - 1) * $retraso-escalonado;
+    }
+}
+
+// Variante de 3 columnas para escritorio
+.card-list-3col {
+    @include desde(escritorio) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.card {
+    @include flex-columna($espacio-sm);
+    padding: $espacio-lg; // 24px
+    background-color: $color-superficie;
+    border: 0;
+    border-left: 4px solid $color-acento;
+    @extend %superficie-elevada;
+    @include transicion($duracion-media, transform, box-shadow);
+    @include animar-entrada;
+
+    // :focus-within la resalta cuando el foco está en un enlace interno
+    &:hover,
+    &:focus-within {
+        transform: translateY(-4px);
+        box-shadow: $sombra-elevada;
+    }
+
+    &:active {
+        transform: translateY(-1px);
+        box-shadow: $sombra-presionada;
+    }
+
+    // El botón queda abajo y no se estira a todo el ancho
+    .btn {
+        align-self: flex-start;
+        margin-top: auto;
+    }
+}

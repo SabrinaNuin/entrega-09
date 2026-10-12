@@ -1,0 +1,35 @@
+// ==========================================================================
+// Mi Portafolio - Archivo maestro
+// Único punto de entrada: reúne todos los partials y genera css/style.css.
+// Compilar con:  npm run sass
+// ==========================================================================
+
+// 1. Variables: no generan CSS
+@use "utilities/variables";
+
+// 2. Base: el reset global tiene que ser lo primero del CSS compilado
+@use "base/base";
+
+// 3. Mixins y placeholders. Los placeholders (%) generan CSS en este punto,
+//    por eso se cargan después del reset
+@use "utilities/mixins";
+
+// 4. Tipografía
+@use "base/tipografia";
+
+// 5. Layout: grandes bloques de la página
+@use "layout/header";
+@use "layout/nav";
+@use "layout/hero";
+@use "layout/main";
+@use "layout/footer";
+
+// 6. Componentes: piezas repetibles
+@use "components/buttons";
+@use "components/cards";
+@use "components/badges";
+@use "components/carousel";
+@use "components/accordion";
+@use "components/lists";
+@use "components/figures";
+@use "components/contact";

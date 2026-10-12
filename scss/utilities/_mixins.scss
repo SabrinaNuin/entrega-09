@@ -1,0 +1,95 @@
+// ==========================================================================
+// Mixins, placeholders y funciones
+// ==========================================================================
+
+@use "sass:color";
+@use "sass:list";
+@use "sass:map";
+@use "sass:string";
+@use "variables" as *;
+
+// --------------------------------------------------------------------------
+// Mixins con parámetros
+// --------------------------------------------------------------------------
+
+// Media query mobile-first. Uso: @include desde(tablet) { ... }
+@mixin desde($breakpoint) {
+    @if not map.has-key($breakpoints, $breakpoint) {
+        @error "El breakpoint `#{$breakpoint}` no existe. Opciones: #{map.keys($breakpoints)}.";
+    }
+
+    @media (min-width: map.get($breakpoints, $breakpoint)) {
+        @content;
+    }
+}
+
+// Transición para una o varias propiedades con la misma duración.
+// Uso: @include transicion($duracion-rapida, color, border-color);
+@mixin transicion($duracion, $propiedades...) {
+    $lista: ();
+
+    @each $propiedad in $propiedades {
+        $lista: list.append($lista, $propiedad $duracion ease, $separator: comma);
+    }
+
+    transition: $lista;
+}
+
+// Animación de entrada (keyframes en base/_base.scss). Solo se aplica si la
+// persona no pidió reducir el movimiento en su sistema
+@mixin animar-entrada($retraso: 0s) {
+    @media (prefers-reduced-motion: no-preference) {
+        animation: entrada-suave $duracion-entrada ease-out $retraso backwards;
+    }
+}
+
+// Apila los hijos en columna y los separa con gap
+@mixin flex-columna($gap) {
+    display: flex;
+    flex-direction: column;
+    gap: $gap;
+}
+
+// Lista en fila, sin viñetas, que baja de línea si no entra
+@mixin lista-en-fila($gap) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $gap;
+    list-style: none;
+}
+
+// Contorno de foco para la navegación con teclado
+@mixin contorno-foco($desplazamiento: 2px) {
+    outline: 2px solid $color-acento;
+    outline-offset: $desplazamiento;
+}
+
+// --------------------------------------------------------------------------
+// Placeholders: estilos compartidos que se aplican con @extend
+// --------------------------------------------------------------------------
+
+// Caja con esquinas redondeadas y sombra: tarjetas, galería y acordeón
+%superficie-elevada {
+    border-radius: $radio-borde;
+    box-shadow: $sombra-base;
+}
+
+// Título blanco para fondos oscuros: hero y epígrafes de la galería
+%titulo-sobre-oscuro {
+    color: $color-superficie;
+}
+
+// --------------------------------------------------------------------------
+// Funciones
+// --------------------------------------------------------------------------
+
+// Devuelve los canales "R, G, B" de un color, como los pide Bootstrap
+@function canales-rgb($color) {
+    @return #{color.channel($color, "red", $space: rgb)}, #{color.channel($color, "green", $space: rgb)}, #{color.channel($color, "blue", $space: rgb)};
+}
+
+// Flecha del acordeón (SVG en línea) pintada con el color recibido
+@function icono-flecha($color) {
+    $hex: string.to-lower-case(string.slice(color.ie-hex-str($color), 4));
+    @return url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23#{$hex}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}

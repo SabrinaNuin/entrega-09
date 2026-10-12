@@ -1,0 +1,53 @@
+// ==========================================================================
+// Variables
+// Todos los valores que se repiten en el sitio se definen una sola vez acá.
+// ==========================================================================
+
+@use "sass:math";
+
+// Paleta de colores
+$color-primario: #1f3a5f;    // Azul marino: encabezado, pie y títulos
+$color-secundario: #2a6f97;  // Azul medio: enlaces, etiquetas y degradado del hero
+$color-acento: #f2a541;      // Ámbar: botón, bordes y estados activos
+$color-fondo: #f4f6f9;       // Gris muy claro: fondo general
+$color-superficie: #ffffff;  // Blanco: tarjetas y texto sobre azul
+$color-texto: #1e2a35;       // Gris azulado oscuro: texto de lectura
+
+// Tipografía
+$fuente-titulos: 'Montserrat', sans-serif;
+$fuente-cuerpo: 'Open Sans', sans-serif;
+$peso-normal: 400;
+$peso-semi: 600;
+$peso-bold: 700;
+
+// Espaciado: toda la escala se calcula a partir de una unidad base
+$espacio-base: 0.5rem;
+$espacio-2xs: math.div($espacio-base, 2);  // 0.25rem
+$espacio-xs: $espacio-base;                // 0.5rem
+$espacio-sm: $espacio-base * 1.5;          // 0.75rem
+$espacio-md: $espacio-base * 2;            // 1rem
+$espacio-lg: $espacio-base * 3;            // 1.5rem
+$espacio-xl: $espacio-base * 5;            // 2.5rem
+
+// Forma y profundidad
+$radio-borde: 8px;
+$sombra-base: 0 2px 6px rgba($color-primario, 0.12);
+$sombra-elevada: 0 10px 22px rgba($color-primario, 0.2);
+$sombra-presionada: 0 4px 10px rgba($color-primario, 0.16);
+$anillo-foco: 0 0 0 0.2rem rgba($color-acento, 0.6);
+
+// Medidas del layout
+$ancho-maximo: 60rem;
+
+// Breakpoints (mobile-first): los usa el mixin desde()
+$breakpoints: (
+    tablet: 768px,
+    escritorio: 1024px
+);
+
+// Duraciones de transiciones y animaciones
+$duracion-rapida: 0.2s;
+$duracion-media: 0.25s;
+$duracion-lenta: 0.6s;
+$duracion-entrada: 0.5s;
+$retraso-escalonado: 0.12s;
